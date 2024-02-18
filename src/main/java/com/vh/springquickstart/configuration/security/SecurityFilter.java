@@ -2,7 +2,7 @@ package com.vh.springquickstart.configuration.security;
 
 import com.vh.springquickstart.core.usecase.GetSubjectUseCase;
 import com.vh.springquickstart.core.usecase.GetUserByUserNameUseCase;
-import com.vh.springquickstart.shared.adapters.UserEntityAdapter;
+import com.vh.springquickstart.shared.mappers.UserEntityMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private GetUserByUserNameUseCase getUserByUserNameUseCase;
 
     @Autowired
-    private UserEntityAdapter userEntityAdapter;
+    private UserEntityMapper userEntityMapper;
 
 
     @Override
@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = retrieveToken(request);
         if (token != null) {
             var subject = subjectUseCase.getSubject(token);
-            var user = userEntityAdapter.toUserEntity(getUserByUserNameUseCase.getUserByUserName(subject));
+            var user = userEntityMapper.toUserEntity(getUserByUserNameUseCase.getUserByUserName(subject));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

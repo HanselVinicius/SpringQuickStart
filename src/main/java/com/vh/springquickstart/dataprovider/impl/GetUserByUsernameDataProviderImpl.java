@@ -4,7 +4,7 @@ import com.vh.springquickstart.core.domain.User;
 import com.vh.springquickstart.core.providers.GetUserByUsernameDataProvider;
 import com.vh.springquickstart.dataprovider.entities.UserEntity;
 import com.vh.springquickstart.dataprovider.entities.repository.UserEntityRepository;
-import com.vh.springquickstart.shared.adapters.UserEntityAdapter;
+import com.vh.springquickstart.shared.mappers.UserEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,13 +18,13 @@ public class GetUserByUsernameDataProviderImpl implements GetUserByUsernameDataP
     private UserEntityRepository userEntityRepository;
 
     @Autowired
-    private UserEntityAdapter userEntityAdapter;
+    private UserEntityMapper userEntityMapper;
 
     @Override
     public User getUserByUsername(String username) {
         var userEntity = (UserEntity) loadUserByUsername(username);
         if (userEntity == null) return null;
-        return userEntityAdapter.toUser(userEntity);
+        return userEntityMapper.toUser(userEntity);
     }
 
     @Override
