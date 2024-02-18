@@ -24,14 +24,14 @@ public class AuthController {
     private RegisterUserUseCase registerUserUseCase;
 
     @PostMapping("/authenticate")
-    @Operation(description = "Endoint to execute authentication of an user")
+    @Operation(description = "Endpoint to execute authentication of an user")
     public ResponseEntity authenticate(@RequestBody @Valid AuthDto authDto){
         var token = authenticateUseCase.authenticate(authDto.username(),authDto.password());
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
-    @Operation(description = "Endoint to execute registration of an user")
+    @Operation(description = "Endpoint to execute registration of an user")
     public ResponseEntity register(@RequestBody @Valid RegistrationDto authDto){
         registerUserUseCase.register(authDto.username(),authDto.password());
         return ResponseEntity.ok().build();
