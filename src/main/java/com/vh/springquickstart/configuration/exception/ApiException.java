@@ -12,4 +12,6 @@ public class ApiException {
     private String message;
     private int errorCode;
 
+
+
 }
